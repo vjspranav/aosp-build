@@ -234,7 +234,6 @@ installclean_files := \
 	$(PRODUCT_OUT)/*.xlb \
 	$(PRODUCT_OUT)/*.zip \
 	$(PRODUCT_OUT)/kernel \
-	$(PRODUCT_OUT)/*.zip.md5sum \
 	$(PRODUCT_OUT)/data \
 	$(PRODUCT_OUT)/skin \
 	$(PRODUCT_OUT)/obj/APPS \
