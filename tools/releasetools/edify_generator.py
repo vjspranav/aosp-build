@@ -1,3 +1,4 @@
+
 # Copyright (C) 2009 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -147,6 +148,14 @@ class EdifyGenerator(object):
                          for b in bootloaders]) +
            ");")
     self.script.append(self.WordWrap(cmd))
+
+  def RunBackup(self, command):
+    self.script.append(('run_program("/tmp/install/bin/backuptool.sh", "%s");' % command))
+
+  def ValidateSignatures(self, command):
+
+ # Exit code 124 == abort. run_program returns raw, so left-shift 8bit
+    self.script.append('run_program("/tmp/install/bin/otasigcheck.sh") != "31744" || abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')
 
   def ShowProgress(self, frac, dur):
     """Update the progress bar, advancing it over 'frac' over the next
