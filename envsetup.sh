@@ -20,12 +20,10 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - sepgrep:   Greps on all local sepolicy files.
 - sgrep:     Greps on all local source files.
 - godir:     Go to the directory containing a file.
-
 Environment options:
 - SANITIZE_HOST: Set to 'true' to use ASAN for all host modules. Note that
                  ASAN_OPTIONS=detect_leaks=0 will be set by default until the
                  build is leak-check clean.
-
 Look at the source to view more functions. The complete list is:
 EOF
     T=$(gettop)
@@ -310,19 +308,19 @@ function settitle()
 
 function addcompletions()
 {
+    local T dir f
+
     # Keep us from trying to run in something that isn't bash.
     if [ -z "${BASH_VERSION}" ]; then
         return
     fi
 
     # Keep us from trying to run in bash that's too old.
-    if [ "${BASH_VERSINFO[0]}" -lt 4 ] ; then
+    if [ ${BASH_VERSINFO[0]} -lt 3 ]; then
         return
     fi
 
-    local T dir f
-    dirs="sdk/bash_completion"
-    for dir in $dirs; do
+    dir="sdk/bash_completion"
     if [ -d ${dir} ]; then
         for f in `/bin/ls ${dir}/[a-z]*.bash 2> /dev/null`; do
             echo "including $f"
@@ -533,9 +531,9 @@ function print_lunch_menu()
     local choice
     for choice in ${LUNCH_MENU_CHOICES[@]}
     do
-        echo " $i. $choice "
+        echo "     $i. $choice"
         i=$(($i+1))
-    done | column
+    done
 
     echo
 }
@@ -610,8 +608,6 @@ function lunch()
     export TARGET_BUILD_TYPE=release
 
     echo
-
-    fixup_common_out_dir
 
     set_stuff_for_environment
     printconfig
